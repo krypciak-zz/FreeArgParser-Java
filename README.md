@@ -20,7 +20,7 @@ Basically <a href="https://commons.apache.org/proper/commons-cli/">Commons CLI</
 ```
 
 <h2>Implementation</h2>
-After importing the .jar, classes used can be found in me.krypek.freeargparser
+After importing the .jar, classes used can be found in me.krypek.freeargparser<br>
 Here's a simple two argument program:
 
 ```java
@@ -33,21 +33,31 @@ int i = data.getInt("i");
 double d = data.getDouble("double");
  ```
  <h3>Explaining</h3>
-Firstable, you have to create new ParserBuilder instance.
-Then, you add all arguments you want, by calling the add function.
+Firstable, you have to create new ParserBuilder instance.<br>
+Then, you add all arguments you want, by calling the add function.<br>
 Example:
-
 
 ```java
 .add("a",        "argument", true,        false,       ArgType.Int,   "description")
-//   short name, long name,  is required, '=' style, argument type, description
+//   short name, long name,  is_required, = style, argument type, description
 ```
 <br>You can access the argument either by:<ul>
 <li>Short name, e.g. -a</li>
 <li>Long name, e.g. --argument</li></ul>
 
-When if required is set to true, the argument has to be provided. If it's not, the program will quit.<br>
-If '=' style is set to true, value will have to be connected with argument name using '=' char, not ' '.<br>
+<br>When is_required is set to true, the argument has to be provided.<br>If it's not, the program will display the help message with the error and terminate.<br><br>
+If = style is set to true, value will have to be connected with argument name using = char, not space char.<br>
+Example: 
+```
+--testArg=2
+```
+insted of
+```
+--testArg 2
+```
+<br>
+
+<br>
 Description is what will be displayed in help message about the argument.<br><br>
 
 Argument types:<br>
@@ -65,7 +75,7 @@ Argument types:<br>
 
 
 <br>
-If you want to put '"' in your string, type '\' before it.<br><br>
+If you want to put " (quote char) in your string, type \ before it.<br><br>
 
 	
 After adding all of your wanted arguments, parse them.<br>
