@@ -58,7 +58,8 @@ public class FreeArgParser {
 							resolveArgument(currentName, isArgShort, "", isEqualSign);
 							i--;
 							break;
-						} else if(c1 == ' ')
+						}
+						if(c1 == ' ')
 							continue;
 
 						isArg = true;
@@ -141,7 +142,8 @@ public class FreeArgParser {
 	}
 
 	private void resolveArgument(final String name, final boolean isShort, final String str, final boolean equalSignDetected) {
-		//System.out.println("resolveArgument(" + name + ", " + isShort + ", " + str + ", " + equalSignDetected + ")");
+		// System.out.println("resolveArgument(" + name + ", " + isShort + ", " + str +
+		// ", " + equalSignDetected + ")");
 		final String newName;
 
 		if(isShort) {
@@ -153,12 +155,11 @@ public class FreeArgParser {
 				HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name + "\" is invalid.", shortNameMap, nameMapToShort);
 			newName = nameMapToShort.get(name);
 		}
-		BuilderArg argExcepted = shortNameMap.get(newName);
-		ArgType argTypeExpected = argExcepted.argType;
-		if(argTypeExpected != ArgType.None && argExcepted.equalSign ^ equalSignDetected) {
+		final BuilderArg argExcepted = shortNameMap.get(newName);
+		final ArgType argTypeExpected = argExcepted.argType;
+		if(argTypeExpected != ArgType.None && argExcepted.equalSign ^ equalSignDetected)
 			HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name + "\"  Argument has to be connected with \'"
 					+ (argExcepted.equalSign ? '=' : ' ') + "\' and not \'" + (equalSignDetected ? '=' : ' ') + "\'", shortNameMap, nameMapToShort);
-		}
 
 		final Argument arg = switch (argTypeExpected) {
 		case Int -> {
@@ -185,7 +186,7 @@ public class FreeArgParser {
 		case String -> new Argument(resolveString(str));
 
 		case StringArray -> {
-			if((!str.startsWith("[") || !str.endsWith("]")))
+			if(!str.startsWith("[") || !str.endsWith("]"))
 				HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name
 						+ "\"  String array has to start with \'[\' and end with \']\', insted got: \"" + str + "\".", shortNameMap, nameMapToShort);
 
@@ -196,7 +197,7 @@ public class FreeArgParser {
 		}
 
 		case BooleanArray -> {
-			if((!str.startsWith("[") || !str.endsWith("]")))
+			if(!str.startsWith("[") || !str.endsWith("]"))
 				HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name
 						+ "\"  Boolean array has to start with \'[\' and end with \']\', insted got: \"" + str + "\".", shortNameMap, nameMapToShort);
 
@@ -213,7 +214,7 @@ public class FreeArgParser {
 			yield new Argument(boolA);
 		}
 		case DoubleArray -> {
-			if((!str.startsWith("[") || !str.endsWith("]")))
+			if(!str.startsWith("[") || !str.endsWith("]"))
 				HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name
 						+ "\"  Double array has to start with \'[\' and end with \']\', insted got: \"" + str + "\".", shortNameMap, nameMapToShort);
 
@@ -230,7 +231,7 @@ public class FreeArgParser {
 			yield new Argument(doubleA);
 		}
 		case IntArray -> {
-			if((!str.startsWith("[") || !str.endsWith("]")))
+			if(!str.startsWith("[") || !str.endsWith("]"))
 				HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name
 						+ "\"  Int array has to start with \'[\' and end with \']\', insted got: \"" + str + "\".", shortNameMap, nameMapToShort);
 

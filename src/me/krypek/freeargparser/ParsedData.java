@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 /**
  * This class is generated after parsing arguments.<br>
- * 
+ *
  * @author krypek
  * @see <a href="https://github.com/krypciak/FreeArgParser-Java">Project's
  *      Github Page</a>
@@ -45,56 +45,56 @@ public class ParsedData {
 	// get or def
 
 	public int getIntOrDef(final String shortName, final int defaultInt) {
-		Argument arg = getArgumentForce(shortName);
+		final Argument arg = getArgumentForce(shortName);
 		if(arg == null)
 			return defaultInt;
 		return arg.getInt();
 	}
 
 	public double getDoubleOrDef(final String shortName, final double defaultDouble) {
-		Argument arg = getArgumentForce(shortName);
+		final Argument arg = getArgumentForce(shortName);
 		if(arg == null)
 			return defaultDouble;
 		return arg.getDouble();
 	}
 
 	public Boolean getBooleanOrDef(final String shortName, final Boolean defaultBoolean) {
-		Argument arg = getArgumentForce(shortName);
+		final Argument arg = getArgumentForce(shortName);
 		if(arg == null)
 			return defaultBoolean;
 		return arg.getBoolean();
 	}
 
 	public String getStringOrDef(final String shortName, final String defaultString) {
-		Argument arg = getArgumentForce(shortName);
+		final Argument arg = getArgumentForce(shortName);
 		if(arg == null)
 			return defaultString;
 		return arg.getString();
 	}
 
 	public String[] getStringArrayOrDef(final String shortName, final String[] defaultArray) {
-		Argument arg = getArgumentForce(shortName);
+		final Argument arg = getArgumentForce(shortName);
 		if(arg == null)
 			return defaultArray;
 		return arg.getStringArray();
 	}
 
 	public int[] getIntArrayOrDef(final String shortName, final int[] defaultArray) {
-		Argument arg = getArgumentForce(shortName);
+		final Argument arg = getArgumentForce(shortName);
 		if(arg == null)
 			return defaultArray;
 		return arg.getIntArray();
 	}
 
 	public double[] getDoubleArrayOrDef(final String shortName, final double[] defaultArray) {
-		Argument arg = getArgumentForce(shortName);
+		final Argument arg = getArgumentForce(shortName);
 		if(arg == null)
 			return defaultArray;
 		return arg.getDoubleArray();
 	}
 
 	public boolean[] getBooleanArrayOrDef(final String shortName, final boolean[] defaultArray) {
-		Argument arg = getArgumentForce(shortName);
+		final Argument arg = getArgumentForce(shortName);
 		if(arg == null)
 			return defaultArray;
 		return arg.getBooleanArray();

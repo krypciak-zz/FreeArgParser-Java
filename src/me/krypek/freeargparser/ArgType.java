@@ -1,8 +1,8 @@
 package me.krypek.freeargparser;
 
 /**
- * 
- * 
+ *
+ *
  * None -> no argument<br>
  * String -> String<br>
  * Int -> int<br>
@@ -11,7 +11,7 @@ package me.krypek.freeargparser;
  * IntArray -> int[]<br>
  * BooleanArray -> boolean[]<br>
  * DoubleArray -> double[]<br>
- * 
+ *
  * @author krypek
  * @see <a href="https://github.com/krypciak/FreeArgParser-Java">Project's
  *      Github Page</a>

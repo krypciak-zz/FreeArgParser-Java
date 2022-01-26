@@ -5,7 +5,7 @@ import java.util.Arrays;
 //@f:off
 class Examples {
 
-	public static void main(String[] args) { fullTest(); }
+	public static void main(final String[] args) { fullTest(); }
 
 	public static void fullTest() {
 
@@ -20,7 +20,7 @@ class Examples {
 			-douA=[2.1, 1.3, 3.7, 7] \
 			-booA [0, 0, 0, 1, false, true] """;
 
-		ParsedData data = new ParserBuilder()
+		final ParsedData data = new ParserBuilder()
 				.add("i", 	"int", 			true,	false, 	ArgType.Int, 			"your_description1")
 				.add("d", 	"double", 		true,	true,  ArgType.Double,			"your_description2")
 				.add("s", 	"string", 		true,	false,  ArgType.String,			"your_description3")
@@ -45,16 +45,16 @@ class Examples {
 				);
 
 	}
-	
+
 	@SuppressWarnings("unused")
-	public static void simple1(String[] args) {
-		ParsedData data = new ParserBuilder()
+	public static void simple1(final String[] args) {
+		final ParsedData data = new ParserBuilder()
 				.add("i", 	"int", 			true,	false, 	ArgType.Int, 		"integer")
 				.add("d", 	"double", 		true,	false,  ArgType.Double,		"double")
 				.parse(args);
-		
-		int i = data.getInt("i");
-		double d = data.getDouble("double");
+
+		final int i = data.getInt("i");
+		final double d = data.getDouble("double");
 	}
 
 }

@@ -30,8 +30,8 @@ public class ParserBuilder {
 	 * @author krypek
 	 * @see <a href="https://github.com/krypciak/FreeArgParser-Java">Project's
 	 *      Github Page</a>
-	 * 
-	 * 
+	 *
+	 *
 	 * @param shortName   Argument's short name, -?
 	 * @param longName    Argument's long name, --?
 	 * @param isRequired  If true, program will terminate with help message if the
@@ -63,7 +63,7 @@ public class ParserBuilder {
 	 * @author krypek
 	 * @see <a href="https://github.com/krypciak/FreeArgParser-Java">Project's
 	 *      Github Page</a>
-	 * 
+	 *
 	 * @param str String to be parsed
 	 * @return ParsedData
 	 */
@@ -74,7 +74,7 @@ public class ParserBuilder {
 	 * @author krypek
 	 * @see <a href="https://github.com/krypciak/FreeArgParser-Java">Project's
 	 *      Github Page</a>
-	 * 
+	 *
 	 * @param arr String array to be parsed
 	 * @return ParsedData
 	 */

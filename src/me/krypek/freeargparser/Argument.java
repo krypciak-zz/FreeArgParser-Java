@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 /**
  * Class that stores data about single argument.<br>
- * 
- * 
+ *
+ *
  * @author krypek
  * @see <a href="https://github.com/krypciak/FreeArgParser-Java">Project's
  *      Github Page</a>
