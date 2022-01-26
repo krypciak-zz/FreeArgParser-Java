@@ -156,6 +156,7 @@ intA:		[1, 2, 3, 4, 5]
 strA:		[hello guys, hi bro, yooooo]
 douA:		[2.1, 1.3, 3.7, 7.0]
 booA:		[false, false, false, true, false, true]
-```<br><br><br>
+```
+<br><br><br>
 
 Questions? You can e-mail me at krypek@tuta.io.
