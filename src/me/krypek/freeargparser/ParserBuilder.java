@@ -26,6 +26,27 @@ public class ParserBuilder {
 		nameMapToShort = new LinkedHashMap<>();
 	}
 
+	/**
+	 * @author krypek
+	 * @see <a href="https://github.com/krypciak/FreeArgParser-Java">Project's
+	 *      Github Page</a>
+	 * 
+	 * 
+	 * @param shortName   Argument's short name, -?
+	 * @param longName    Argument's long name, --?
+	 * @param isRequired  If true, program will terminate with help message if the
+	 *                    argument wasn't provided.
+	 * @param equalSign   If true, argument connection with value will be '=' and
+	 *                    not ' '. <br>
+	 *                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example
+	 *                    if true: -a=1<br>
+	 *                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example
+	 *                    if false: -a 1
+	 * @param argType     Specify the argument type
+	 * @param description What will be displayed in help message about the argument.
+	 * @return
+	 */
+
 	public ParserBuilder add(final String shortName, final String longName, final boolean isRequired, final boolean equalSign, final ArgType argType, final String description) {
 		if(shortNameMap.containsKey(shortName))
 			throw new FreeArgParserException("Cannot add short name: \"" + shortName + "\" twice.");
@@ -38,7 +59,24 @@ public class ParserBuilder {
 
 	public FreeArgParser build() { return new FreeArgParser(shortNameMap, nameMapToShort); }
 
+	/**
+	 * @author krypek
+	 * @see <a href="https://github.com/krypciak/FreeArgParser-Java">Project's
+	 *      Github Page</a>
+	 * 
+	 * @param str String to be parsed
+	 * @return ParsedData
+	 */
+
 	public ParsedData parse(final String str) { return new FreeArgParser(shortNameMap, nameMapToShort).parse(str); }
 
+	/**
+	 * @author krypek
+	 * @see <a href="https://github.com/krypciak/FreeArgParser-Java">Project's
+	 *      Github Page</a>
+	 * 
+	 * @param arr String array to be parsed
+	 * @return ParsedData
+	 */
 	public ParsedData parse(final String[] arr) { return new FreeArgParser(shortNameMap, nameMapToShort).parse(arr); }
 }

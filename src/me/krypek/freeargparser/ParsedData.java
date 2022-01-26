@@ -2,6 +2,13 @@ package me.krypek.freeargparser;
 
 import java.util.HashMap;
 
+/**
+ * This class is generated after parsing arguments.<br>
+ * 
+ * @author krypek
+ * @see <a href="https://github.com/krypciak/FreeArgParser-Java">Project's
+ *      Github Page</a>
+ */
 public class ParsedData {
 
 	private final HashMap<String, Argument> shortNameMap;
@@ -51,10 +58,10 @@ public class ParsedData {
 		return arg.getDouble();
 	}
 
-	public Boolean getBooleanOrNull(final String shortName) {
+	public Boolean getBooleanOrDef(final String shortName, final Boolean defaultBoolean) {
 		Argument arg = getArgumentForce(shortName);
 		if(arg == null)
-			return null;
+			return defaultBoolean;
 		return arg.getBoolean();
 	}
 

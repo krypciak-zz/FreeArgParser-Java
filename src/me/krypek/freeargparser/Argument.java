@@ -2,6 +2,15 @@ package me.krypek.freeargparser;
 
 import java.util.Arrays;
 
+/**
+ * Class that stores data about single argument.<br>
+ * 
+ * 
+ * @author krypek
+ * @see <a href="https://github.com/krypciak/FreeArgParser-Java">Project's
+ *      Github Page</a>
+ */
+
 public class Argument {
 	private final int INT_DEFAULT = Integer.MIN_VALUE;
 	private final double DOUBLE_DEFAULT = Double.MIN_VALUE;
