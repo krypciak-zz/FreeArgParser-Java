@@ -1,57 +1,18 @@
 package me.krypek.freeargparser;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 public class FreeArgParser {
 
-	public static void main(final String[] args) {
-		//@f:off
-		final String input = """
-			-i 1 \
-			-d 2.3 \
-			-s susibaka \
-			-b true \
-			-na \
-			-intA [1, 2, 3, 4, 5] \
-			-strA [hello guys, "hi bro", yooooo] \
-			-douA [2.1, 1.3, 3.7, 7] \
-			-booA [0, 0, 0, 1, 0, 1] """;
-
-		final ParsedData data = new ParserBuilder()
-				.add("i", 	"int", 		true, 	ArgType.Int, 		"integer sus")
-				.add("d", 	"double", 	true, 	ArgType.Double,		"even more sus double")
-				.add("s", 	"string", 	true, 	ArgType.String,		"sussiest amoguse stringu")
-				.add("b", 	"boolean", 	true, 	ArgType.Boolean,	"bul bul bul")
-				.add("na", 	"noarg",	false,	ArgType.None, 		"no arg test")
-				.add("intA","intArray", true, 	ArgType.IntArray, 	" yo")
-				.add("strA","stringArray", true, 	ArgType.StringArray, 	" yo")
-				.add("douA","doubleArray", true, 	ArgType.DoubleArray, 	" yo")
-				.add("booA", "booleanArray", true, ArgType.BooleanArray, "yoo")
-
-				.parse(input);
-
-
-		System.out.println("\nint:\t\t"+data.getInt("i")+
-						   "\ndouble:\t\t"+data.getDouble("d")+
-						   "\nstring:\t\t"+data.getString("s")+
-						   "\nboolean:\t"+data.getBoolean("b")+
-						   "\nnoarg:\t\t"+data.has("na")+
-						   "\nintA:\t\t"+Arrays.toString(data.getIntArray("intA"))+
-						   "\nstrA:\t\t"+Arrays.toString(data.getStringArray("strA"))+
-						   "\ndouA:\t\t"+Arrays.toString(data.getDoubleArray("douA"))+
-						   "\nbooA:\t\t"+Arrays.toString(data.getBooleanArray("booA"))
-				);
-		//@f:on
-		System.out.println(data);
-	}
-
 	private final HashMap<String, BuilderArg> shortNameMap;
 	private final HashMap<String, String> nameMapToShort;
 
 	private HashMap<String, Argument> argumentMap;
+
+	@Override
+	public String toString() { return shortNameMap.toString(); }
 
 	public FreeArgParser(final HashMap<String, BuilderArg> shortNameMap, final HashMap<String, String> nameMapToShort) {
 		this.shortNameMap = shortNameMap;
@@ -71,7 +32,7 @@ public class FreeArgParser {
 		argumentMap = new HashMap<>();
 
 		final char[] chars = str.toCharArray();
-		boolean isShortName = false, isName = false, isArg = false, isQuote = false, firstInArg = false, isArgShort = false;
+		boolean isName = false, isArg = false, isQuote = false, firstInArg = false, isArgShort = false, isEqualSign = false;
 		String currentName = "";
 		int nameIndex = 0;
 		String argStr = "";
@@ -84,35 +45,39 @@ public class FreeArgParser {
 			final char next = i == chars.length - 1 ? '?' : chars[i + 1];
 			final char prev = i == 0 ? '?' : chars[i - 1];
 
-			if(isShortName || isName) {
-				if(c == ' ') {
-					isShortName = false;
+			if(isName) {
+				if(c == ' ' || c == '=') {
+					isEqualSign = c == '=';
+
 					isName = false;
 					currentName = str.substring(nameIndex, i);
 
 					for (; i < chars.length; i++) {
 						final char c1 = chars[i];
-						if(c1 == '-' || i == chars.length - 1)
-							resolveArgument(currentName, isArgShort, "");
-						else if(c1 == ' ')
+						if(c1 == '-' || i == chars.length - 1) {
+							resolveArgument(currentName, isArgShort, "", isEqualSign);
+							i--;
+							break;
+						} else if(c1 == ' ')
 							continue;
 
 						isArg = true;
 						firstInArg = true;
+						i--;
 						break;
 					}
-					i--;
+
 				}
 				continue;
 			}
 
 			if(isArg) {
-				if(c == ' ' && firstInArg)
+				if((c == ' ' || c == '=') && firstInArg)
 					continue;
 				if(c == ' ' && !isQuote && bracket == 0) {
 					isArg = false;
 					argStr = str.substring(argIndex, i);
-					resolveArgument(currentName, isArgShort, argStr);
+					resolveArgument(currentName, isArgShort, argStr, isEqualSign);
 					continue;
 				}
 
@@ -136,7 +101,7 @@ public class FreeArgParser {
 						isQuote = false;
 						isArg = false;
 						argStr = str.substring(argIndex, i + 1);
-						resolveArgument(currentName, isArgShort, argStr);
+						resolveArgument(currentName, isArgShort, argStr, isEqualSign);
 					}
 
 					continue;
@@ -148,16 +113,13 @@ public class FreeArgParser {
 			}
 
 			if(c == '-' && bracket == 0) {
+				isName = true;
 				if(next == '-') {
-					isName = true;
-					isShortName = false;
 					isArgShort = false;
 					i++;
-				} else {
-					isName = false;
-					isShortName = true;
+				} else
 					isArgShort = true;
-				}
+
 				nameIndex = i + 1;
 				continue;
 			}
@@ -178,20 +140,24 @@ public class FreeArgParser {
 		return new ParsedData(argumentMap);
 	}
 
-	private void resolveArgument(final String name, final boolean isShort, final String str) {
-		ArgType argTypeExpected;
-		String newName;
+	private void resolveArgument(final String name, final boolean isShort, final String str, final boolean equalSignDetected) {
+		//System.out.println("resolveArgument(" + name + ", " + isShort + ", " + str + ", " + equalSignDetected + ")");
+		final String newName;
 
 		if(isShort) {
 			if(!shortNameMap.containsKey(name))
-				HelpMessage.print("Argument: \"-" + name + "\" is invalid.", shortNameMap, nameMapToShort);
-			argTypeExpected = shortNameMap.get(name).argType;
+				HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name + "\" is invalid.", shortNameMap, nameMapToShort);
 			newName = name;
 		} else {
 			if(!nameMapToShort.containsKey(name))
-				HelpMessage.print("Argument: \"--" + name + "\" is invalid.", shortNameMap, nameMapToShort);
+				HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name + "\" is invalid.", shortNameMap, nameMapToShort);
 			newName = nameMapToShort.get(name);
-			argTypeExpected = shortNameMap.get(newName).argType;
+		}
+		BuilderArg argExcepted = shortNameMap.get(newName);
+		ArgType argTypeExpected = argExcepted.argType;
+		if(argTypeExpected != ArgType.None && argExcepted.equalSign ^ equalSignDetected) {
+			HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name + "\"  Argument has to be connected with \'"
+					+ (argExcepted.equalSign ? '=' : ' ') + "\' and not \'" + (equalSignDetected ? '=' : ' ') + "\'", shortNameMap, nameMapToShort);
 		}
 
 		final Argument arg = switch (argTypeExpected) {
