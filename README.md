@@ -107,8 +107,55 @@ If an argument has ArgType set to None, you need to
 ```java
 boolean doesExist = parseddata.has("na");
 ```
-in order to check if it was provided.
+in order to check if it was provided.<br><br><br>
+
+Here's an example program utilizing all argument types:
+```java
+final String input = """
+	-i 1\
+	-d=2.3 \
+	-s hgfgf \
+	-b=true \
+	-na \
+	--intArray=[1, 2, 3, 4, 5] \
+	-strA [hello guys, "hi bro", yooooo] \
+	-douA=[2.1, 1.3, 3.7, 7] \
+	-booA [0, 0, 0, 1, false, true] """;
+
+ParsedData data = new ParserBuilder()
+	.add("i", 	"int", 		true,	false, 	ArgType.Int, 		"description1")
+	.add("d", 	"double", 	true,	true,  	ArgType.Double,		"description2")
+	.add("s", 	"string", 	true,	false,  ArgType.String,		"description3")
+	.add("b", 	"boolean", 	true,	true,  	ArgType.Boolean,	"description4")
+	.add("na", 	"noarg",	false,	false, 	ArgType.None, 		"description5")
+	.add("intA",	"intArray", 	false,	true,  	ArgType.IntArray, 	"description6")
+	.add("strA",	"stringArray", 	true,	false,  ArgType.StringArray, 	"description7")
+	.add("douA",	"doubleArray", 	true,	true,  	ArgType.DoubleArray, 	"description8")
+	.add("booA",	"booleanArray",	true,	false,  ArgType.BooleanArray,	"description9")
+	.parse(input);
 
 
-	
+System.out.println("\nint:\t\t"+data.getIntOrDef("i", 1)+
+	"\ndouble:\t\t"+data.getDouble("d")+
+	"\nstring:\t\t"+data.getString("s")+
+	"\nboolean:\t"+data.getBoolean("b")+
+	"\nnoarg:\t\t"+data.has("na")+
+	"\nintA:\t\t"+Arrays.toString(data.getIntArray("intA"))+
+	"\nstrA:\t\t"+Arrays.toString(data.getStringArray("strA"))+
+	"\ndouA:\t\t"+Arrays.toString(data.getDoubleArray("douA"))+
+	"\nbooA:\t\t"+Arrays.toString(data.getBooleanArray("booA"))  );
+```
+Output:
+```
+int:		1
+double:		2.3
+string:		hgfgf
+boolean:	true
+noarg:		true
+intA:		[1, 2, 3, 4, 5]
+strA:		[hello guys, hi bro, yooooo]
+douA:		[2.1, 1.3, 3.7, 7.0]
+booA:		[false, false, false, true, false, true]
+```<br><br><br>
 
+Questions? You can e-mail me at krypek@tuta.io.
