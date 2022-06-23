@@ -158,5 +158,3 @@ douA:		[2.1, 1.3, 3.7, 7.0]
 booA:		[false, false, false, true, false, true]
 ```
 <br><br><br>
-
-Questions? You can e-mail me at krypek@tuta.io.
