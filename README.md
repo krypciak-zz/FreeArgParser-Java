@@ -158,3 +158,6 @@ douA:		[2.1, 1.3, 3.7, 7.0]
 booA:		[false, false, false, true, false, true]
 ```
 <br><br><br>
+
+# License
+Licensed under GNU GPLv3 or later
