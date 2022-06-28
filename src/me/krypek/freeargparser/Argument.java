@@ -34,15 +34,15 @@ public class Argument {
 	@Override
 	public String toString() {
 		return switch (argType) {
-		case Int -> intValue + "i";
-		case Boolean -> booleanValue + "";
-		case Double -> doubleValue + "d";
-		case String -> "\"" + stringValue + "\"";
-		case StringArray -> Arrays.toString(stringArrayValue);
-		case None -> "none";
-		case BooleanArray -> Arrays.toString(booleanArrayValue);
-		case DoubleArray -> Arrays.toString(doubleArrayValue);
-		case IntArray -> Arrays.toString(intArrayValue);
+			case Int -> intValue + "i";
+			case Boolean -> booleanValue + "";
+			case Double -> doubleValue + "d";
+			case String -> "\"" + stringValue + "\"";
+			case StringArray -> Arrays.toString(stringArrayValue);
+			case None -> "none";
+			case BooleanArray -> Arrays.toString(booleanArrayValue);
+			case DoubleArray -> Arrays.toString(doubleArrayValue);
+			case IntArray -> Arrays.toString(intArrayValue);
 		};
 	}
 

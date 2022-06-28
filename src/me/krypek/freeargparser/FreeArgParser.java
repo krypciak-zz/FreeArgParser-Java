@@ -162,97 +162,96 @@ public class FreeArgParser {
 					+ (argExcepted.equalSign ? '=' : ' ') + "\' and not \'" + (equalSignDetected ? '=' : ' ') + "\'", shortNameMap, nameMapToShort);
 
 		final Argument arg = switch (argTypeExpected) {
-		case Int -> {
-			final Integer resolved = resolveInt(str);
-			if(resolved == null)
-				HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name + "\"  Expected type int, insted got: \"" + str + "\".", shortNameMap,
-						nameMapToShort);
-			yield new Argument(resolved);
-		}
-		case Boolean -> {
-			final Boolean resolved = resolveBoolean(str);
-			if(resolved == null)
-				HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name + "\"  Expected type boolean, insted got: \"" + str + "\".", shortNameMap,
-						nameMapToShort);
-			yield new Argument(resolved);
-		}
-		case Double -> {
-			final Double resolved = resolveDouble(str);
-			if(resolved == null)
-				HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name + "\"  Expected type double, insted got: \"" + str + "\".", shortNameMap,
-						nameMapToShort);
-			yield new Argument(resolved);
-		}
-		case String -> new Argument(resolveString(str));
-
-		case StringArray -> {
-			if(!str.startsWith("[") || !str.endsWith("]"))
-				HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name
-						+ "\"  String array has to start with \'[\' and end with \']\', insted got: \"" + str + "\".", shortNameMap, nameMapToShort);
-
-			final String[] strA = getArrayFromString(str);
-			for (int i = 0; i < strA.length; i++)
-				strA[i] = resolveString(strA[i]);
-			yield new Argument(strA);
-		}
-
-		case BooleanArray -> {
-			if(!str.startsWith("[") || !str.endsWith("]"))
-				HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name
-						+ "\"  Boolean array has to start with \'[\' and end with \']\', insted got: \"" + str + "\".", shortNameMap, nameMapToShort);
-
-			final String[] strA = getArrayFromString(str);
-			final boolean[] boolA = new boolean[strA.length];
-			for (int i = 0; i < strA.length; i++) {
-				final Boolean bool = resolveBoolean(strA[i]);
-				if(bool == null)
-					HelpMessage.print(
-							"Argument: \"" + (isShort ? "-" : "--") + name + "\"  Expected type boolean, insted got: \" [ ... " + strA[i] + " ... ]\".",
-							shortNameMap, nameMapToShort);
-				boolA[i] = bool;
+			case Int -> {
+				final Integer resolved = resolveInt(str);
+				if(resolved == null)
+					HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name + "\"  Expected type int, insted got: \"" + str + "\".", shortNameMap,
+							nameMapToShort);
+				yield new Argument(resolved);
 			}
-			yield new Argument(boolA);
-		}
-		case DoubleArray -> {
-			if(!str.startsWith("[") || !str.endsWith("]"))
-				HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name
-						+ "\"  Double array has to start with \'[\' and end with \']\', insted got: \"" + str + "\".", shortNameMap, nameMapToShort);
-
-			final String[] strA = getArrayFromString(str);
-			final double[] doubleA = new double[strA.length];
-			for (int i = 0; i < strA.length; i++) {
-				final Double doubl = resolveDouble(strA[i]);
-				if(doubl == null)
-					HelpMessage.print(
-							"Argument: \"" + (isShort ? "-" : "--") + name + "\"  Expected type double, insted got: \" [ ... " + strA[i] + " ... ]\".",
+			case Boolean -> {
+				final Boolean resolved = resolveBoolean(str);
+				if(resolved == null)
+					HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name + "\"  Expected type boolean, insted got: \"" + str + "\".",
 							shortNameMap, nameMapToShort);
-				doubleA[i] = doubl;
+				yield new Argument(resolved);
 			}
-			yield new Argument(doubleA);
-		}
-		case IntArray -> {
-			if(!str.startsWith("[") || !str.endsWith("]"))
-				HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name
-						+ "\"  Int array has to start with \'[\' and end with \']\', insted got: \"" + str + "\".", shortNameMap, nameMapToShort);
-
-			final String[] strA = getArrayFromString(str);
-			final int[] intA = new int[strA.length];
-			for (int i = 0; i < strA.length; i++) {
-				final Integer in = resolveInt(strA[i]);
-				if(in == null)
-					HelpMessage.print(
-							"Argument: \"" + (isShort ? "-" : "--") + name + "\"  Expected type int, insted got: \" [ ... " + strA[i] + " ... ]\".",
+			case Double -> {
+				final Double resolved = resolveDouble(str);
+				if(resolved == null)
+					HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name + "\"  Expected type double, insted got: \"" + str + "\".",
 							shortNameMap, nameMapToShort);
-				intA[i] = in;
+				yield new Argument(resolved);
 			}
-			yield new Argument(intA);
-		}
-		case None -> {
-			if(!str.equals(""))
-				HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name + "\"  Expected no arguments, insted got: \"" + str + "\".", shortNameMap,
-						nameMapToShort);
-			yield new Argument();
-		}
+			case String -> new Argument(resolveString(str));
+
+			case StringArray -> {
+				if(!str.startsWith("[") || !str.endsWith("]"))
+					HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name
+							+ "\"  String array has to start with \'[\' and end with \']\', insted got: \"" + str + "\".", shortNameMap, nameMapToShort);
+
+				final String[] strA = getArrayFromString(str);
+				for (int i = 0; i < strA.length; i++)
+					strA[i] = resolveString(strA[i]);
+				yield new Argument(strA);
+			}
+
+			case BooleanArray -> {
+				if(!str.startsWith("[") || !str.endsWith("]"))
+					HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name
+							+ "\"  Boolean array has to start with \'[\' and end with \']\', insted got: \"" + str + "\".", shortNameMap, nameMapToShort);
+
+				final String[] strA = getArrayFromString(str);
+				final boolean[] boolA = new boolean[strA.length];
+				for (int i = 0; i < strA.length; i++) {
+					final Boolean bool = resolveBoolean(strA[i]);
+					if(bool == null)
+						HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name + "\"  Expected type boolean, insted got: \" [ ... " + strA[i]
+								+ " ... ]\".", shortNameMap, nameMapToShort);
+					boolA[i] = bool;
+				}
+				yield new Argument(boolA);
+			}
+			case DoubleArray -> {
+				if(!str.startsWith("[") || !str.endsWith("]"))
+					HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name
+							+ "\"  Double array has to start with \'[\' and end with \']\', insted got: \"" + str + "\".", shortNameMap, nameMapToShort);
+
+				final String[] strA = getArrayFromString(str);
+				final double[] doubleA = new double[strA.length];
+				for (int i = 0; i < strA.length; i++) {
+					final Double doubl = resolveDouble(strA[i]);
+					if(doubl == null)
+						HelpMessage.print(
+								"Argument: \"" + (isShort ? "-" : "--") + name + "\"  Expected type double, insted got: \" [ ... " + strA[i] + " ... ]\".",
+								shortNameMap, nameMapToShort);
+					doubleA[i] = doubl;
+				}
+				yield new Argument(doubleA);
+			}
+			case IntArray -> {
+				if(!str.startsWith("[") || !str.endsWith("]"))
+					HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name
+							+ "\"  Int array has to start with \'[\' and end with \']\', insted got: \"" + str + "\".", shortNameMap, nameMapToShort);
+
+				final String[] strA = getArrayFromString(str);
+				final int[] intA = new int[strA.length];
+				for (int i = 0; i < strA.length; i++) {
+					final Integer in = resolveInt(strA[i]);
+					if(in == null)
+						HelpMessage.print(
+								"Argument: \"" + (isShort ? "-" : "--") + name + "\"  Expected type int, insted got: \" [ ... " + strA[i] + " ... ]\".",
+								shortNameMap, nameMapToShort);
+					intA[i] = in;
+				}
+				yield new Argument(intA);
+			}
+			case None -> {
+				if(!str.equals(""))
+					HelpMessage.print("Argument: \"" + (isShort ? "-" : "--") + name + "\"  Expected no arguments, insted got: \"" + str + "\".",
+							shortNameMap, nameMapToShort);
+				yield new Argument();
+			}
 		};
 
 		if(argTypeExpected == ArgType.None && arg.getArgType() != ArgType.None)
@@ -276,18 +275,18 @@ public class FreeArgParser {
 			final char c = charA[i];
 			final char p = i == 0 ? '?' : charA[i - 1];
 			switch (c) {
-			case ',' -> {
-				if(!isQuote && bracket == 0) {
-					list.add(str.substring(prevIndex, i).strip());
-					prevIndex = i + 1;
+				case ',' -> {
+					if(!isQuote && bracket == 0) {
+						list.add(str.substring(prevIndex, i).strip());
+						prevIndex = i + 1;
+					}
 				}
-			}
-			case '\"' -> {
-				if(p != '\\')
-					isQuote = !isQuote;
-			}
-			case '[' -> bracket++;
-			case ']' -> bracket--;
+				case '\"' -> {
+					if(p != '\\')
+						isQuote = !isQuote;
+				}
+				case '[' -> bracket++;
+				case ']' -> bracket--;
 			}
 		}
 		list.add(str.substring(prevIndex).strip());

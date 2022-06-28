@@ -95,15 +95,15 @@ public class HelpMessage {
 
 	public static String getArgTypeString(final ArgType argType) {
 		return switch (argType) {
-		case Boolean -> "boolean";
-		case Double -> "double";
-		case Int -> "int";
-		case String -> "String";
-		case StringArray -> "String[]";
-		case None -> "no argument";
-		case BooleanArray -> "boolean[]";
-		case DoubleArray -> "double[]";
-		case IntArray -> "int[]";
+			case Boolean -> "boolean";
+			case Double -> "double";
+			case Int -> "int";
+			case String -> "String";
+			case StringArray -> "String[]";
+			case None -> "no argument";
+			case BooleanArray -> "boolean[]";
+			case DoubleArray -> "double[]";
+			case IntArray -> "int[]";
 		};
 	}
 

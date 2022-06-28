@@ -47,7 +47,8 @@ public class ParserBuilder {
 	 * @return
 	 */
 
-	public ParserBuilder add(final String shortName, final String longName, final boolean isRequired, final boolean equalSign, final ArgType argType, final String description) {
+	public ParserBuilder add(final String shortName, final String longName, final boolean isRequired, final boolean equalSign, final ArgType argType,
+			final String description) {
 		if(shortNameMap.containsKey(shortName))
 			throw new FreeArgParserException("Cannot add short name: \"" + shortName + "\" twice.");
 		if(nameMapToShort.containsKey(longName))
