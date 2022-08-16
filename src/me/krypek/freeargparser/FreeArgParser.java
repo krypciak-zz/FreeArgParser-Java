@@ -113,7 +113,7 @@ public class FreeArgParser {
 				}
 			}
 
-			if(c == '-' && bracket == 0) {
+			if((prev == ' ' || prev == '?') && c == '-' && bracket == 0) {
 				isName = true;
 				if(next == '-') {
 					isArgShort = false;
